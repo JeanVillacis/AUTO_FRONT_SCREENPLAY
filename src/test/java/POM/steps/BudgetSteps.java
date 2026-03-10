@@ -5,9 +5,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import POM.pages.LoginPage;
 import POM.pages.RegisterPage;
 import POM.pages.TransactionPage;
-import utils.TestDataConstants;
 
 public class BudgetSteps {
+
+    private static final String BASE_URL = System.getProperty("webdriver.base.url", "http://localhost:3000");
 
     private RegisterPage registerPage;
     private LoginPage loginPage;
@@ -15,15 +16,15 @@ public class BudgetSteps {
 
     @Step("El usuario abre la página de registro")
     public void openRegisterPage() {
-        registerPage.openPage(TestDataConstants.REGISTER_URL);
+        registerPage.openPage(BASE_URL + "/register");
     }
 
     @Step("El usuario completa el formulario de registro con datos válidos")
     public void fillRegistrationForm() {
-        registerPage.enterDisplayName(TestDataConstants.REG_DISPLAY_NAME);
-        registerPage.enterEmail(TestDataConstants.REG_EMAIL);
-        registerPage.enterPassword(TestDataConstants.REG_PASSWORD);
-        registerPage.enterConfirmPassword(TestDataConstants.REG_CONFIRM_PASSWORD);
+        registerPage.enterDisplayName("Carlos Andrade");
+        registerPage.enterEmail("carlos.andrade." + System.currentTimeMillis() + "@pruebas.com");
+        registerPage.enterPassword("Prueba2026!");
+        registerPage.enterConfirmPassword("Prueba2026!");
     }
 
     @Step("El usuario envía el formulario de registro")
@@ -48,13 +49,13 @@ public class BudgetSteps {
 
     @Step("El usuario abre la página de login")
     public void openLoginPage() {
-        loginPage.openPage(TestDataConstants.LOGIN_URL);
+        loginPage.openPage(BASE_URL + "/login");
     }
 
     @Step("El usuario completa el formulario de login con credenciales válidas")
     public void fillLoginForm() {
-        loginPage.enterEmail(TestDataConstants.REG_EMAIL);
-        loginPage.enterPassword(TestDataConstants.REG_PASSWORD);
+        loginPage.enterEmail("carlos.andrade@pruebas.com");
+        loginPage.enterPassword("Prueba2026!");
     }
 
     @Step("El usuario envía el formulario de login")
@@ -79,7 +80,7 @@ public class BudgetSteps {
 
     @Step("El usuario navega a la página de transacciones")
     public void navigateToTransactions() {
-        transactionPage.openPage(TestDataConstants.TRANSACTIONS_URL);
+        transactionPage.openPage(BASE_URL + "/transactions");
     }
 
     @Step("El usuario abre el modal de nueva transacción")
@@ -92,11 +93,11 @@ public class BudgetSteps {
 
     @Step("El usuario completa el formulario de transacción con datos válidos")
     public void fillTransactionForm() {
-        transactionPage.selectTransactionType(TestDataConstants.TX_TYPE);
-        transactionPage.enterDescription(TestDataConstants.TX_DESCRIPTION);
-        transactionPage.enterAmount(TestDataConstants.TX_AMOUNT);
-        transactionPage.selectCategory(TestDataConstants.TX_CATEGORY);
-        transactionPage.enterDate(TestDataConstants.TX_DATE);
+        transactionPage.selectTransactionType("EXPENSE");
+        transactionPage.enterDescription("Compra supermercado quincenal");
+        transactionPage.enterAmount("85.50");
+        transactionPage.selectCategory("Alimentación");
+        transactionPage.enterDate("2025-12-15");
     }
 
     @Step("El usuario envía el formulario de transacción")
@@ -113,7 +114,7 @@ public class BudgetSteps {
 
     @Step("La transacción aparece en el listado")
     public void verifyTransactionInTable() {
-        assertThat(transactionPage.isTransactionInTable(TestDataConstants.TX_DESCRIPTION))
+        assertThat(transactionPage.isTransactionInTable("Compra supermercado quincenal"))
             .as("La transacción creada debe estar visible en la tabla")
             .isTrue();
     }

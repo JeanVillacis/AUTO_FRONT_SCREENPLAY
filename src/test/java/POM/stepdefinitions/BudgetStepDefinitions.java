@@ -15,7 +15,6 @@ import screenplay.questions.IsNewTransactionModalVisible;
 import screenplay.questions.IsOnLoginPage;
 import screenplay.questions.IsSuccessToastVisible;
 import screenplay.questions.IsTransactionListed;
-import screenplay.model.TransactionData;
 import screenplay.tasks.CompleteLoginForm;
 import screenplay.tasks.CompleteRegistrationForm;
 import screenplay.tasks.CompleteTransactionForm;
@@ -35,21 +34,27 @@ public class BudgetStepDefinitions {
     @Managed(driver = "chrome")
     WebDriver browser;
 
+    private String registeredEmail;
+    private String registeredPassword;
+
     @Before
     public void setTheStage() {
         OnStage.setTheStage(new OnlineCast());
     }
 
-    @Given("la aplicación de gestión de presupuesto está disponible")
-    public void laAplicacionEstaDisponible() {
+    @Given("el usuario está en la página de inicio de la aplicación")
+    public void elUsuarioEstaEnLaPaginaInicio() {
         OnStage.theActorCalled("Usuario").can(BrowseTheWeb.with(browser));
         OnStage.theActorInTheSpotlight().attemptsTo(OpenTheRegistrationPage.now());
     }
 
-    @When("el usuario se registra con datos válidos")
-    public void elUsuarioSeRegistraConDatosValidos() {
+    @When("el usuario se registra con nombre {string} email {string} y contraseña {string}")
+    public void elUsuarioSeRegistra(String displayName, String email, String password) {
+        String uniqueEmail = email.replace("@", "." + System.currentTimeMillis() + "@");
+        this.registeredEmail = uniqueEmail;
+        this.registeredPassword = password;
         OnStage.theActorInTheSpotlight().attemptsTo(
-            CompleteRegistrationForm.withValidData(),
+            CompleteRegistrationForm.withData(displayName, uniqueEmail, password, password),
             SubmitRegistration.form()
         );
     }
@@ -71,7 +76,7 @@ public class BudgetStepDefinitions {
     @When("el usuario inicia sesión con las credenciales registradas")
     public void elUsuarioIniciaSesion() {
         OnStage.theActorInTheSpotlight().attemptsTo(
-            CompleteLoginForm.withRegisteredCredentials(),
+            CompleteLoginForm.withCredentials(registeredEmail, registeredPassword),
             SubmitLogin.form()
         );
     }
@@ -95,8 +100,8 @@ public class BudgetStepDefinitions {
         OnStage.theActorInTheSpotlight().attemptsTo(OpenTransactionsSection.now());
     }
 
-    @And("el usuario crea una nueva transacción de tipo egreso con datos válidos")
-    public void elUsuarioCreaUnaTransaccion() {
+    @And("el usuario crea una transacción de tipo {string} descripción {string} monto {string} categoría {string} y fecha {string}")
+    public void elUsuarioCreaTransaccion(String tipo, String descripcion, String monto, String categoria, String fecha) {
         OnStage.theActorInTheSpotlight().attemptsTo(
             OpenNewTransactionModal.now()
         );
@@ -106,7 +111,7 @@ public class BudgetStepDefinitions {
         );
 
         OnStage.theActorInTheSpotlight().attemptsTo(
-            CompleteTransactionForm.withValidData(),
+            CompleteTransactionForm.withData(tipo, descripcion, monto, categoria, fecha),
             SubmitTransaction.form()
         );
     }
@@ -118,10 +123,10 @@ public class BudgetStepDefinitions {
         );
     }
 
-    @And("la transacción aparece en el listado de transacciones")
-    public void laTransaccionApareceEnElListado() {
+    @And("la transacción {string} aparece en el listado de transacciones")
+    public void laTransaccionApareceEnElListado(String descripcion) {
         OnStage.theActorInTheSpotlight().should(
-            GivenWhenThen.seeThat(IsTransactionListed.withDescription(TransactionData.validExpense().getDescription()), is(true))
+            GivenWhenThen.seeThat(IsTransactionListed.withDescription(descripcion), is(true))
         );
     }
 }

@@ -1,7 +1,5 @@
 package screenplay.model;
 
-import utils.TestDataConstants;
-
 public class RegistrationData {
 
     private final String displayName;
@@ -34,10 +32,10 @@ public class RegistrationData {
 
     public static RegistrationData valid() {
         return new RegistrationData(
-            TestDataConstants.REG_DISPLAY_NAME,
-            TestDataConstants.REG_EMAIL,
-            TestDataConstants.REG_PASSWORD,
-            TestDataConstants.REG_CONFIRM_PASSWORD
+            "Carlos Andrade",
+            "carlos.andrade@pruebas.com",
+            "Prueba2026!",
+            "Prueba2026!"
         );
     }
 }

@@ -38,6 +38,11 @@ public class CompleteTransactionForm implements Task {
         return instrumented(CompleteTransactionForm.class, TransactionData.validExpense());
     }
 
+    public static Performable withData(String type, String description, String amount, String category, String date) {
+        return instrumented(CompleteTransactionForm.class,
+            new TransactionData(type, description, amount, category, date));
+    }
+
     private static net.serenitybdd.screenplay.targets.Target transactionTypeOption(String type) {
         if ("EXPENSE".equalsIgnoreCase(type)) {
             return TYPE_OPTION_EXPENSE;

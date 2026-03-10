@@ -1,7 +1,5 @@
 package screenplay.model;
 
-import utils.TestDataConstants;
-
 public class LoginCredentials {
 
     private final String email;
@@ -21,6 +19,6 @@ public class LoginCredentials {
     }
 
     public static LoginCredentials registeredUser() {
-        return new LoginCredentials(TestDataConstants.REG_EMAIL, TestDataConstants.REG_PASSWORD);
+        return new LoginCredentials("carlos.andrade@pruebas.com", "Prueba2026!");
     }
 }

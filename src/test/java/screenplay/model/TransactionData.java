@@ -1,7 +1,5 @@
 package screenplay.model;
 
-import utils.TestDataConstants;
-
 public class TransactionData {
 
     private final String type;
@@ -40,11 +38,11 @@ public class TransactionData {
 
     public static TransactionData validExpense() {
         return new TransactionData(
-            TestDataConstants.TX_TYPE,
-            TestDataConstants.TX_DESCRIPTION,
-            TestDataConstants.TX_AMOUNT,
-            TestDataConstants.TX_CATEGORY,
-            TestDataConstants.TX_DATE
+            "EXPENSE",
+            "Compra supermercado quincenal",
+            "85.50",
+            "Alimentación",
+            "2025-12-15"
         );
     }
 }

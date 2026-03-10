@@ -28,4 +28,8 @@ public class CompleteLoginForm implements Task {
     public static Performable withRegisteredCredentials() {
         return instrumented(CompleteLoginForm.class, LoginCredentials.registeredUser());
     }
+
+    public static Performable withCredentials(String email, String password) {
+        return instrumented(CompleteLoginForm.class, new LoginCredentials(email, password));
+    }
 }

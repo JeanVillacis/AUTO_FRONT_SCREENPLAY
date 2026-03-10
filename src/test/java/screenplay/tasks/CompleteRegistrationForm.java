@@ -30,4 +30,9 @@ public class CompleteRegistrationForm implements Task {
     public static Performable withValidData() {
         return instrumented(CompleteRegistrationForm.class, RegistrationData.valid());
     }
+
+    public static Performable withData(String displayName, String email, String password, String confirmPassword) {
+        return instrumented(CompleteRegistrationForm.class,
+            new RegistrationData(displayName, email, password, confirmPassword));
+    }
 }
