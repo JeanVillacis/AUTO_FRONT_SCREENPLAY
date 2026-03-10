@@ -1,10 +1,10 @@
-package steps;
+package POM.steps;
 
 import net.serenitybdd.annotations.Step;
 import static org.assertj.core.api.Assertions.assertThat;
-import pages.LoginPage;
-import pages.RegisterPage;
-import pages.TransactionPage;
+import POM.pages.LoginPage;
+import POM.pages.RegisterPage;
+import POM.pages.TransactionPage;
 import utils.TestDataConstants;
 
 public class BudgetSteps {

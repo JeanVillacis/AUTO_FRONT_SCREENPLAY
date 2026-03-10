@@ -1,8 +1,5 @@
 package utils;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 public final class TestDataConstants {
 
     private static final String DEFAULT_BASE_URL = "http://localhost:3000";
@@ -23,7 +20,8 @@ public final class TestDataConstants {
     public static final String TX_DESCRIPTION = "Compra supermercado quincenal";
     public static final String TX_AMOUNT = "85.50";
     public static final String TX_CATEGORY = "Alimentación";
-    public static final String TX_DATE = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
+    // Configure with -Dtest.tx.date=YYYY-MM-DD when needed.
+    public static final String TX_DATE = System.getProperty("test.tx.date", "2025-12-15");
 
     private static String resolveBaseUrl() {
         String configuredBaseUrl = System.getProperty("webdriver.base.url", DEFAULT_BASE_URL);

@@ -30,8 +30,11 @@ java {
 
 test {
     testLogging.showStandardStreams = true
+    systemProperty 'serenity.project.name', 'AUTO_FRONT_SCREENPLAY'
+    systemProperty 'thucydides.project.name', 'AUTO_FRONT_SCREENPLAY'
 }
 
 serenity {
     reports = ['single-page-html']
+    projectKey = 'AUTO_FRONT_SCREENPLAY'
 }
