@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(
-        features = "src/test/resources/features",
+        features = "AUTO_FRONT_SCREENPLAY/src/test/resources/features",
         glue = "screenplay.stepdefinitions",
         plugin = {"pretty"},
         tags = "@e2e"

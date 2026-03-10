@@ -7,7 +7,6 @@ import io.cucumber.java.en.When;
 import net.serenitybdd.annotations.Managed;
 import net.serenitybdd.screenplay.GivenWhenThen;
 import net.serenitybdd.screenplay.actors.OnStage;
-import net.serenitybdd.screenplay.actors.OnlineCast;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import org.openqa.selenium.WebDriver;
 import screenplay.questions.IsDashboardVisible;
@@ -25,8 +24,6 @@ import screenplay.tasks.SubmitLogin;
 import screenplay.tasks.SubmitRegistration;
 import screenplay.tasks.SubmitTransaction;
 
-import io.cucumber.java.Before;
-
 import static org.hamcrest.Matchers.is;
 
 public class BudgetStepDefinitions {
@@ -36,11 +33,6 @@ public class BudgetStepDefinitions {
 
     private String registeredEmail;
     private String registeredPassword;
-
-    @Before
-    public void setTheStage() {
-        OnStage.setTheStage(new OnlineCast());
-    }
 
     @Given("el usuario está en la página de inicio de la aplicación")
     public void elUsuarioEstaEnLaPaginaInicio() {
