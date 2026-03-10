@@ -11,7 +11,6 @@ public final class TestDataConstants {
     public static final String TRANSACTIONS_URL = buildUrl("/transactions");
 
     public static final String REG_DISPLAY_NAME = "Carlos Andrade";
-    // Unique email per execution to avoid duplicate-user registration errors.
     public static final String REG_EMAIL = "carlos.andrade." + System.currentTimeMillis() + "@pruebas.com";
     public static final String REG_PASSWORD = "Prueba2026!";
     public static final String REG_CONFIRM_PASSWORD = "Prueba2026!";
@@ -20,7 +19,6 @@ public final class TestDataConstants {
     public static final String TX_DESCRIPTION = "Compra supermercado quincenal";
     public static final String TX_AMOUNT = "85.50";
     public static final String TX_CATEGORY = "Alimentación";
-    // Configure with -Dtest.tx.date=YYYY-MM-DD when needed.
     public static final String TX_DATE = System.getProperty("test.tx.date", "2025-12-15");
 
     private static String resolveBaseUrl() {
