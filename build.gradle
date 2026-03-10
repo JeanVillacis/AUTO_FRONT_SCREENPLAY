@@ -32,6 +32,7 @@ test {
     testLogging.showStandardStreams = true
     systemProperty 'serenity.project.name', 'AUTO_FRONT_SCREENPLAY'
     systemProperty 'thucydides.project.name', 'AUTO_FRONT_SCREENPLAY'
+    outputs.upToDateWhen { false }
 }
 
 serenity {
