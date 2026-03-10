@@ -35,14 +35,4 @@ public class TransactionData {
     public String getDate() {
         return date;
     }
-
-    public static TransactionData validExpense() {
-        return new TransactionData(
-            "EXPENSE",
-            "Compra supermercado quincenal",
-            "85.50",
-            "Alimentación",
-            "2025-12-15"
-        );
-    }
 }

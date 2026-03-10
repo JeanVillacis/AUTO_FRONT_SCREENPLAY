@@ -17,8 +17,4 @@ public class LoginCredentials {
     public String getPassword() {
         return password;
     }
-
-    public static LoginCredentials registeredUser() {
-        return new LoginCredentials("carlos.andrade@pruebas.com", "Prueba2026!");
-    }
 }

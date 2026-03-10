@@ -34,10 +34,6 @@ public class CompleteTransactionForm implements Task {
         );
     }
 
-    public static Performable withValidData() {
-        return instrumented(CompleteTransactionForm.class, TransactionData.validExpense());
-    }
-
     public static Performable withData(String type, String description, String amount, String category, String date) {
         return instrumented(CompleteTransactionForm.class,
             new TransactionData(type, description, amount, category, date));

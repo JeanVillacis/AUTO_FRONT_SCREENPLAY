@@ -29,13 +29,4 @@ public class RegistrationData {
     public String getConfirmPassword() {
         return confirmPassword;
     }
-
-    public static RegistrationData valid() {
-        return new RegistrationData(
-            "Carlos Andrade",
-            "carlos.andrade@pruebas.com",
-            "Prueba2026!",
-            "Prueba2026!"
-        );
-    }
 }
