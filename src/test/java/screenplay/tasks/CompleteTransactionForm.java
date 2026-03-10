@@ -11,6 +11,7 @@ import screenplay.interactions.SelectTransactionType;
 import screenplay.model.TransactionData;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
+import static screenplay.ui.TransactionPageUI.*;
 
 public class CompleteTransactionForm implements Task {
 
@@ -23,15 +24,27 @@ public class CompleteTransactionForm implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-            SelectTransactionType.value(data.getType()),
+            SelectTransactionType.openDropdown(TYPE_SELECT_TRIGGER),
+            SelectTransactionType.option(transactionTypeOption(data.getType())),
             EnterDescription.withValue(data.getDescription()),
             EnterAmount.withValue(data.getAmount()),
-            SelectCategory.named(data.getCategory()),
+            SelectCategory.openDropdown(CATEGORY_SELECT_TRIGGER),
+            SelectCategory.option(CATEGORY_OPTION_BY_NAME.of(data.getCategory())),
             EnterTransactionDate.value(data.getDate())
         );
     }
 
     public static Performable withValidData() {
         return instrumented(CompleteTransactionForm.class, TransactionData.validExpense());
+    }
+
+    private static net.serenitybdd.screenplay.targets.Target transactionTypeOption(String type) {
+        if ("EXPENSE".equalsIgnoreCase(type)) {
+            return TYPE_OPTION_EXPENSE;
+        }
+        if ("INCOME".equalsIgnoreCase(type)) {
+            return TYPE_OPTION_INCOME;
+        }
+        throw new IllegalArgumentException("Tipo de transaccion no soportado: " + type);
     }
 }

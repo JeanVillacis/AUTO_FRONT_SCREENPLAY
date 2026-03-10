@@ -7,6 +7,7 @@ import screenplay.interactions.EnterRegistrationData;
 import screenplay.model.RegistrationData;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
+import static screenplay.ui.RegisterPageUI.*;
 
 public class CompleteRegistrationForm implements Task {
 
@@ -18,7 +19,12 @@ public class CompleteRegistrationForm implements Task {
 
     @Override
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(EnterRegistrationData.using(data));
+        actor.attemptsTo(
+            EnterRegistrationData.intoField(data.getDisplayName(), DISPLAY_NAME_INPUT),
+            EnterRegistrationData.intoField(data.getEmail(), EMAIL_INPUT),
+            EnterRegistrationData.intoField(data.getPassword(), PASSWORD_INPUT),
+            EnterRegistrationData.intoField(data.getConfirmPassword(), CONFIRM_PASSWORD_INPUT)
+        );
     }
 
     public static Performable withValidData() {

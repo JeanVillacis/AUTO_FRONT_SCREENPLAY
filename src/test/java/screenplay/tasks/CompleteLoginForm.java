@@ -4,6 +4,7 @@ import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import screenplay.interactions.EnterLoginCredentials;
+import screenplay.interactions.EnterLoginPassword;
 import screenplay.model.LoginCredentials;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
@@ -18,7 +19,10 @@ public class CompleteLoginForm implements Task {
 
     @Override
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(EnterLoginCredentials.using(credentials));
+        actor.attemptsTo(
+            EnterLoginCredentials.withEmail(credentials.getEmail()),
+            EnterLoginPassword.withPassword(credentials.getPassword())
+        );
     }
 
     public static Performable withRegisteredCredentials() {

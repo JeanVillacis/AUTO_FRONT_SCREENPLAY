@@ -4,29 +4,24 @@ import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.actions.Enter;
-import screenplay.model.LoginCredentials;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 import static screenplay.ui.LoginPageUI.EMAIL_INPUT;
-import static screenplay.ui.LoginPageUI.PASSWORD_INPUT;
 
 public class EnterLoginCredentials implements Interaction {
 
-    private final LoginCredentials credentials;
+    private final String email;
 
-    public EnterLoginCredentials(LoginCredentials credentials) {
-        this.credentials = credentials;
+    public EnterLoginCredentials(String email) {
+        this.email = email;
     }
 
     @Override
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(
-            Enter.theValue(credentials.getEmail()).into(EMAIL_INPUT),
-            Enter.theValue(credentials.getPassword()).into(PASSWORD_INPUT)
-        );
+        actor.attemptsTo(Enter.theValue(email).into(EMAIL_INPUT));
     }
 
-    public static Performable using(LoginCredentials credentials) {
-        return instrumented(EnterLoginCredentials.class, credentials);
+    public static Performable withEmail(String email) {
+        return instrumented(EnterLoginCredentials.class, email);
     }
 }

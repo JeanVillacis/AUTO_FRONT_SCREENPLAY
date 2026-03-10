@@ -4,39 +4,28 @@ import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.actions.Click;
+import net.serenitybdd.screenplay.targets.Target;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
-import static screenplay.ui.TransactionPageUI.TYPE_OPTION_EXPENSE;
-import static screenplay.ui.TransactionPageUI.TYPE_OPTION_INCOME;
-import static screenplay.ui.TransactionPageUI.TYPE_SELECT_TRIGGER;
 
 public class SelectTransactionType implements Interaction {
 
-    private final String type;
+    private final Target target;
 
-    public SelectTransactionType(String type) {
-        this.type = type;
+    public SelectTransactionType(Target target) {
+        this.target = target;
     }
 
     @Override
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(
-            Click.on(TYPE_SELECT_TRIGGER),
-            Click.on(transactionTypeOption(type))
-        );
+        actor.attemptsTo(Click.on(target));
     }
 
-    public static Performable value(String type) {
-        return instrumented(SelectTransactionType.class, type);
+    public static Performable openDropdown(Target trigger) {
+        return instrumented(SelectTransactionType.class, trigger);
     }
 
-    private static net.serenitybdd.screenplay.targets.Target transactionTypeOption(String type) {
-        if ("EXPENSE".equalsIgnoreCase(type)) {
-            return TYPE_OPTION_EXPENSE;
-        }
-        if ("INCOME".equalsIgnoreCase(type)) {
-            return TYPE_OPTION_INCOME;
-        }
-        throw new IllegalArgumentException("Tipo de transaccion no soportado: " + type);
+    public static Performable option(Target option) {
+        return instrumented(SelectTransactionType.class, option);
     }
 }
