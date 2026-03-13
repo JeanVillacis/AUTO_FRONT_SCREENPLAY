@@ -2,11 +2,9 @@ package screenplay.questions;
 
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Question;
-import net.serenitybdd.screenplay.waits.WaitUntil;
 
 import java.util.Locale;
 
-import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 import static screenplay.ui.TransactionPageUI.TRANSACTION_ROW_BY_DESCRIPTION;
 
 public class IsTransactionListed implements Question<Boolean> {
@@ -20,15 +18,9 @@ public class IsTransactionListed implements Question<Boolean> {
     @Override
     public Boolean answeredBy(Actor actor) {
         String normalizedDescription = description.toLowerCase(Locale.ROOT);
-        try {
-            actor.attemptsTo(
-                WaitUntil.the(TRANSACTION_ROW_BY_DESCRIPTION.of(normalizedDescription), isVisible())
-                    .forNoMoreThan(20).seconds()
-            );
-            return true;
-        } catch (Throwable e) {
-            return false;
-        }
+        return TRANSACTION_ROW_BY_DESCRIPTION.of(normalizedDescription)
+            .resolveFor(actor)
+            .isVisible();
     }
 
     public static Question<Boolean> withDescription(String description) {

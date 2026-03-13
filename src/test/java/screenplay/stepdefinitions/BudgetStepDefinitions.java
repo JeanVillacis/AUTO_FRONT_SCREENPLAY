@@ -8,6 +8,7 @@ import net.serenitybdd.annotations.Managed;
 import net.serenitybdd.screenplay.GivenWhenThen;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
+import net.serenitybdd.screenplay.waits.WaitUntil;
 import org.openqa.selenium.WebDriver;
 import screenplay.questions.IsDashboardVisible;
 import screenplay.questions.IsNewTransactionModalVisible;
@@ -24,15 +25,16 @@ import screenplay.tasks.SubmitLogin;
 import screenplay.tasks.SubmitRegistration;
 import screenplay.tasks.SubmitTransaction;
 
+import java.util.Locale;
+
+import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 import static org.hamcrest.Matchers.is;
+import static screenplay.ui.TransactionPageUI.TRANSACTION_ROW_BY_DESCRIPTION;
 
 public class BudgetStepDefinitions {
 
     @Managed(driver = "chrome")
     WebDriver browser;
-
-    private String registeredEmail;
-    private String registeredPassword;
 
     @Given("el usuario está en la página de inicio de la aplicación")
     public void elUsuarioEstaEnLaPaginaInicio() {
@@ -42,11 +44,10 @@ public class BudgetStepDefinitions {
 
     @When("el usuario se registra con nombre {string} email {string} y contraseña {string}")
     public void elUsuarioSeRegistra(String displayName, String email, String password) {
-        String uniqueEmail = email.replace("@", "." + System.currentTimeMillis() + "@");
-        this.registeredEmail = uniqueEmail;
-        this.registeredPassword = password;
+        OnStage.theActorInTheSpotlight().remember("registeredEmail", email);
+        OnStage.theActorInTheSpotlight().remember("registeredPassword", password);
         OnStage.theActorInTheSpotlight().attemptsTo(
-            CompleteRegistrationForm.withData(displayName, uniqueEmail, password, password),
+            CompleteRegistrationForm.withData(displayName, email, password, password),
             SubmitRegistration.form()
         );
     }
@@ -67,8 +68,10 @@ public class BudgetStepDefinitions {
 
     @When("el usuario inicia sesión con las credenciales registradas")
     public void elUsuarioIniciaSesion() {
+        String email = OnStage.theActorInTheSpotlight().recall("registeredEmail");
+        String password = OnStage.theActorInTheSpotlight().recall("registeredPassword");
         OnStage.theActorInTheSpotlight().attemptsTo(
-            CompleteLoginForm.withCredentials(registeredEmail, registeredPassword),
+            CompleteLoginForm.withCredentials(email, password),
             SubmitLogin.form()
         );
     }
@@ -97,11 +100,9 @@ public class BudgetStepDefinitions {
         OnStage.theActorInTheSpotlight().attemptsTo(
             OpenNewTransactionModal.now()
         );
-
         OnStage.theActorInTheSpotlight().should(
             GivenWhenThen.seeThat(IsNewTransactionModalVisible.value(), is(true))
         );
-
         OnStage.theActorInTheSpotlight().attemptsTo(
             CompleteTransactionForm.withData(tipo, descripcion, monto, categoria, fecha),
             SubmitTransaction.form()
@@ -117,6 +118,10 @@ public class BudgetStepDefinitions {
 
     @And("la transacción {string} aparece en el listado de transacciones")
     public void laTransaccionApareceEnElListado(String descripcion) {
+        OnStage.theActorInTheSpotlight().attemptsTo(
+            WaitUntil.the(TRANSACTION_ROW_BY_DESCRIPTION.of(descripcion.toLowerCase(Locale.ROOT)), isVisible())
+                .forNoMoreThan(20).seconds()
+        );
         OnStage.theActorInTheSpotlight().should(
             GivenWhenThen.seeThat(IsTransactionListed.withDescription(descripcion), is(true))
         );

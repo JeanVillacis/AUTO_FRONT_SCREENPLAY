@@ -1,5 +1,6 @@
 package screenplay.tasks;
 
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
@@ -18,6 +19,7 @@ public class CompleteLoginForm implements Task {
     }
 
     @Override
+    @Step("{0} completes the login form")
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
             EnterLoginCredentials.withEmail(credentials.getEmail()),

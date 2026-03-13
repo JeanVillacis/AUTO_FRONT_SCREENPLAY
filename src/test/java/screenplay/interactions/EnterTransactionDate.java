@@ -1,5 +1,6 @@
 package screenplay.interactions;
 
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.Performable;
@@ -18,6 +19,7 @@ public class EnterTransactionDate implements Interaction {
     }
 
     @Override
+    @Step("{0} enters transaction date #date")
     public <T extends Actor> void performAs(T actor) {
         JavascriptExecutor js = (JavascriptExecutor) BrowseTheWeb.as(actor).getDriver();
         js.executeScript(

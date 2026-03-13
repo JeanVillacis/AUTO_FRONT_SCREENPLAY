@@ -1,5 +1,6 @@
 package screenplay.tasks;
 
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
@@ -22,6 +23,7 @@ public class CompleteTransactionForm implements Task {
     }
 
     @Override
+    @Step("{0} completes the transaction form")
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
             SelectTransactionType.openDropdown(TYPE_SELECT_TRIGGER),

@@ -1,5 +1,6 @@
 package screenplay.interactions;
 
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.Performable;
@@ -17,6 +18,7 @@ public class EnterDescription implements Interaction {
     }
 
     @Override
+    @Step("{0} enters description #description")
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(Enter.theValue(description).into(DESCRIPTION_INPUT));
     }

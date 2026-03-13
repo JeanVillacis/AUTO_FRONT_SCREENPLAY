@@ -2,13 +2,14 @@ package screenplay.questions;
 
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Question;
-import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
+
+import static screenplay.ui.LoginPageUI.LOGIN_SUBMIT_BUTTON;
 
 public class IsOnLoginPage implements Question<Boolean> {
 
     @Override
     public Boolean answeredBy(Actor actor) {
-        return BrowseTheWeb.as(actor).getDriver().getCurrentUrl().contains("/login");
+        return LOGIN_SUBMIT_BUTTON.resolveFor(actor).isVisible();
     }
 
     public static Question<Boolean> value() {

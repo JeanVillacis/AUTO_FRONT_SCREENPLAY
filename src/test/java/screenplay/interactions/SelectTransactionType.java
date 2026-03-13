@@ -1,5 +1,6 @@
 package screenplay.interactions;
 
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.Performable;
@@ -17,6 +18,7 @@ public class SelectTransactionType implements Interaction {
     }
 
     @Override
+    @Step("{0} clicks transaction type target")
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(Click.on(target));
     }
