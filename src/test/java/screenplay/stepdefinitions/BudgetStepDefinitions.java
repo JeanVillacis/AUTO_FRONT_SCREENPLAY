@@ -29,6 +29,7 @@ import java.util.Locale;
 
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 import static org.hamcrest.Matchers.is;
+import static screenplay.ui.LoginPageUI.LOGIN_SUBMIT_BUTTON;
 import static screenplay.ui.TransactionPageUI.TRANSACTION_ROW_BY_DESCRIPTION;
 
 public class BudgetStepDefinitions {
@@ -54,6 +55,9 @@ public class BudgetStepDefinitions {
 
     @Then("el sistema confirma la creación exitosa de la cuenta")
     public void elSistemaConfirmaLaCreacionExitosa() {
+        OnStage.theActorInTheSpotlight().attemptsTo(
+            WaitUntil.the(LOGIN_SUBMIT_BUTTON, isVisible()).forNoMoreThan(10).seconds()
+        );
         OnStage.theActorInTheSpotlight().should(
             GivenWhenThen.seeThat(IsOnLoginPage.value(), is(true))
         );
